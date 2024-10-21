@@ -11,54 +11,61 @@ import Precios from '../../features/precios/view/Precios';
 import Registrarse from '../../features/registrarse/view/Registrarse';
 import Servicios from '../../features/servicios/view/Servicios';
 import Admin from '../../features/administrador/view/Admin';
+import PrivateRoute from '../auth/components/PrivateRoute';
+import PublicRoute from '../auth/components/publicRoute';
+import Layout from '../layouts/Layout';
 
 export const AppRouter = createBrowserRouter([
     {
         path: '/',
-        element: <HomeView/>,
+        element: <Layout><HomeView/></Layout>
     },
     {
         path: '/login',
-        element: <LoginView/>,
+        element: <PublicRoute><Layout><LoginView/></Layout>,</PublicRoute>
     },
     {
         path: '/paciente',
-        element: <PacienteView/>,
+        element: <PrivateRoute><Layout><PacienteView/></Layout></PrivateRoute>
     },
     {
         path: '/medico',
-        element: <MedicoView/>,
+        element: <PrivateRoute><Layout><MedicoView/></Layout>,</PrivateRoute>
     },
     {
         path: '/agendar_cita',
-        element: <AgendarCita/>,
+        element: <PrivateRoute><Layout><AgendarCita/></Layout>,</PrivateRoute>
     },
     {
         path: '/Precios',
-        element: <Precios/>,
+        element: <Layout><Precios/></Layout>,
     },
     {
         path: '/ayuda',
-        element: <Ayuda/>,
+        element: <Layout><Ayuda/></Layout>,
     },
     {
         path: '/especialidades',
-        element: <Especialidades/>,
+        element: <Layout><Especialidades/></Layout>,
     },
     {
         path: '/registrarse',
-        element: <Registrarse/>,
+        element: <Layout><Registrarse/></Layout>,
     },
     {
         path: '/servicios',
-        element: <Servicios/>,
+        element: <Layout><Servicios/></Layout>,
     },
     {
         path: '/videollamada',
-        element: <VideollamadaView/>,
+        element: <PrivateRoute><Layout><VideollamadaView/></Layout>,</PrivateRoute>
     },
     {
         path: '/admin',
-        element: <Admin/>,
+        element: <PublicRoute><Layout><Admin/></Layout>,</PublicRoute>
+    },
+    {
+        path: '*',
+        element: <div>no se encontro la pagina</div>,
     },
 ]);
