@@ -14,6 +14,8 @@ import Admin from '../../features/administrador/view/Admin';
 import PrivateRoute from '../auth/components/PrivateRoute';
 import PublicRoute from '../auth/components/publicRoute';
 import Layout from '../layouts/Layout';
+import TurnosView from '../../features/medico/view/TurnosView';
+import VIdeollamadaMedico from '../../features/videollamada/view/VIdeollamadaMedico';
 
 export const AppRouter = createBrowserRouter([
     {
@@ -31,6 +33,14 @@ export const AppRouter = createBrowserRouter([
     {
         path: '/medico',
         element: <PrivateRoute><Layout><MedicoView/></Layout>,</PrivateRoute>
+    },
+    {
+        path: '/medico/turnos',
+        element: <PrivateRoute><Layout><TurnosView/></Layout>,</PrivateRoute>
+    },
+    {
+        path: '/medico/videollamada',
+        element: <PrivateRoute><Layout><VIdeollamadaMedico/></Layout>,</PrivateRoute>
     },
     {
         path: '/agendar_cita',

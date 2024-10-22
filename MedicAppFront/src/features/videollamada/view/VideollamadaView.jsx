@@ -2,7 +2,7 @@ import React from 'react'
 
 const VideollamadaView = () => {
   return (
-    <div>VideollamadaView</div>
+    <div>Videollamada de paciente</div>
   )
 }
 

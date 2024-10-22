@@ -6,7 +6,7 @@ const LoginView = () => {
   console.log("isLoggerdIn:" + isLoggedIn);
   return (
     <>
-      <div className='container'>
+      <div className='container ' style={{ marginTop: '80px' }}>
         <div className="row align-items-center">
           <div className="col-md-6">
             <form>
