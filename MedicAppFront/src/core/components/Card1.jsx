@@ -13,7 +13,7 @@ const Card1 = () => {
             <p className="card-text text-start">
               Al trabajar en el sector de salud, consideramos que es nuestro deber primordial
               garantizar la seguridad de nuestros pacientes, la eficacia de nuestros tratamientos,
-              la transparencia de nuestras prácticas y una atención absolutamente oportuna.
+              la transparencia de nuestras prácticas y una atención absolutamente oportunaaaaaaaaaaaa.
             </p>
             <div className="text-start"> {/* Clase para alinear el botón a la izquierda */}
               <button className="btn btn-primary">Contactarnos</button>

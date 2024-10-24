@@ -1,21 +1,37 @@
 import React from 'react'
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Menu from '../components/Menu'
 import Footer from '../components/Footer'
 
 const Layout = ({ children }) => {
     return (
         <>
-            <div className='container'>
+            {/* <div className='container fluid'> */}
                 {/* header */}
-                <Menu></Menu> 
+                {/* <Menu></Menu>  */}
                 {/* main */}
+                {/* <main> */}
+                    {/* <div>{children}</div> */}
+                {/* </main> */}
+                {/* footer */}
+                {/* <Footer></Footer> */}
+            {/* </div> */}
+
+            <Container fluid>
+                <Row>
+                <Col>
+                    {/* header */}
+                <Menu></Menu> 
                 <main>
                     <div>{children}</div>
                 </main>
                 {/* footer */}
-                <Footer></Footer>
-                
-            </div>
+                {/* <Footer></Footer> */}
+                </Col>
+                </Row>
+            </Container>
 
         </>
 
