@@ -10,12 +10,21 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import java.util.List;
 
+
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/")
 public class UserController {
+
+   
 
     @Autowired
     private UserService userService;
+//Login
+    @GetMapping("/login")
+    public ResponseEntity<String> login() {
+        return new ResponseEntity<>("Login page", HttpStatus.OK);
+    }
+
 // Todos los usuarios
     @GetMapping
     public ResponseEntity<List<UserModel>> getAllUsers() {
@@ -29,11 +38,11 @@ public class UserController {
         return user != null ? new ResponseEntity<>(user, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 //Agregar usuario
-    @PostMapping
-    public ResponseEntity<UserModel> createUser(@Valid @RequestBody UserModel user) {
-        UserModel savedUser = userService.saveUser(user);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-    }
+   @PostMapping
+public ResponseEntity<UserModel> createUser(@Valid @RequestBody UserModel user) {
+    UserModel savedUser = userService.registerUser(user);
+    return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+}
 //Editar usuario
     @PutMapping("/{id}")
     public ResponseEntity<UserModel> updateUser(@PathVariable Integer id, @Valid @RequestBody UserModel user) {
@@ -46,4 +55,7 @@ public class UserController {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+   
+    
 }
