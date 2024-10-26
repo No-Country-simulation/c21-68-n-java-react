@@ -21,15 +21,13 @@ const Layout = ({ children }) => {
 
             <Container fluid>
                 <Row>
-                <Col>
-                    {/* header */}
-                <Menu></Menu> 
-                <main>
-                    <div>{children}</div>
-                </main>
-                {/* footer */}
-                {/* <Footer></Footer> */}
-                </Col>
+                    <Col>
+                        <Menu></Menu>
+                        <main>
+                            <div>{children}</div>
+                        </main>
+                        <Footer></Footer>
+                    </Col>
                 </Row>
             </Container>
 
