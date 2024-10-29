@@ -12,10 +12,12 @@ import Registrarse from '../../features/registrarse/view/Registrarse';
 import Servicios from '../../features/servicios/view/Servicios';
 import Admin from '../../features/administrador/view/Admin';
 import PrivateRoute from '../auth/components/PrivateRoute';
-import PublicRoute from '../auth/components/publicRoute';
+//import PublicRoute from '../auth/components/publicRoute';
 import Layout from '../layouts/Layout';
 import TurnosView from '../../features/medico/view/TurnosView';
 import VIdeollamadaMedico from '../../features/videollamada/view/VIdeollamadaMedico';
+import Horario from '../../features/agendarCita/view/Horario';
+import PublicRoute from '../auth/components/PublicRoute';
 
 export const AppRouter = createBrowserRouter([
     {
@@ -24,7 +26,7 @@ export const AppRouter = createBrowserRouter([
     },
     {
         path: '/login',
-        element: <PublicRoute><Layout><LoginView/></Layout>,</PublicRoute>
+        element:<PublicRoute><Layout><LoginView/></Layout></PublicRoute> 
     },
     {
         path: '/paciente',
@@ -36,7 +38,7 @@ export const AppRouter = createBrowserRouter([
     },
     {
         path: '/medico/turnos',
-        element: <PrivateRoute><Layout><TurnosView/></Layout>,</PrivateRoute>
+        element:<Layout><TurnosView/></Layout>,
     },
     {
         path: '/medico/videollamada',
@@ -44,7 +46,11 @@ export const AppRouter = createBrowserRouter([
     },
     {
         path: '/agendar_cita',
-        element: <PrivateRoute><Layout><AgendarCita/></Layout>,</PrivateRoute>
+        element: <Layout><AgendarCita/></Layout>,
+    },
+    {
+        path: 'paciente/horario',
+        element: <PrivateRoute><Layout><Horario/></Layout>,</PrivateRoute>
     },
     {
         path: '/Precios',

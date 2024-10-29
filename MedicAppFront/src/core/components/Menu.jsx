@@ -19,7 +19,7 @@ const Menu = () => {
       }; */
     return (
         <Navbar expand="lg" className="bg-body-tertiary justify-content-between">
-            <Container fluid style={{ "background-color": '#F5F5F5' }}>
+            <Container fluid style={{ "backgroundColor": '#F5F5F5' }}>
                 <Navbar.Brand href="/">
                     <img
                         alt=""
@@ -52,6 +52,7 @@ const Menu = () => {
                             <NavDropdown.Item href="#action/3.4">
                                 Separated link
                             </NavDropdown.Item> */}
+                            <NavDropdown.Item onClick={logOut}>Cerrar Sesion</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

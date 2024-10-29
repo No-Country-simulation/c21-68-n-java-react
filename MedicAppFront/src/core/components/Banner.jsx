@@ -20,7 +20,7 @@ const Banner = () => {
 			</Carousel.Item>
 			<Carousel.Item>
 					<Row className="align-items-center"> {/* Centra verticalmente */}
-						<Col md={6} style={{ "padding-left": '160px' }}>
+						<Col md={6} style={{ "paddingLeft": '160px' }}>
 							<h1 className="h1">
 								<span  style={{ "color": '#234A6B' }}>Obtenga una consulta</span> 
 								<span  style={{ "color": '#0086FF' }}> Medica Personalizada</span></h1>

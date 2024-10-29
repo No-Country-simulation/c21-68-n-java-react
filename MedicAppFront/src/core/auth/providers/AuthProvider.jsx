@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
         // si esta logueado entonces actualiza estado
         const initAuth = async () => {
             const loginState = await getLoginState();
+            console.log("auth:"+loginState)
             if (!loginState) return;
             setIsLoggedIn(loginState);
         }
