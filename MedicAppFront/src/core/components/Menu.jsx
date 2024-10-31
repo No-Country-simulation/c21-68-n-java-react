@@ -8,24 +8,26 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 
 const Menu = () => {
-    /* const navigate = useNavigate(); */
+    // const navigate = useNavigate();
     const { logOut, isLoggedIn } = useAuth();
 
-    /*  const handleLoginClick = () => {
-       navigate('/login'); // Cambia la ruta según sea necesario
-     }; */
-    /*   const handleRegistrarseClick = () => {
-        navigate('/registrarse'); // Cambia la ruta según sea necesario
-      }; */
+    // const handleLoginClick = () => {
+    //    navigate('/login'); // Cambia la ruta según sea necesario
+    // };
+
+    // const handleRegistrarseClick = () => {
+    //     navigate('/registrarse'); // Cambia la ruta según sea necesario
+    // };
+
     return (
-        <Navbar expand="lg" className="bg-body-tertiary justify-content-between">
-            <Container fluid style={{ "backgroundColor": '#F5F5F5' }}>
+        <Navbar expand="lg" className="bg-body-tertiary justify-content-center">
+            <Container className="justify-content-center" fluid style={{ "backgroundColor": 'rgb(155 ,219, 242' }}>
                 <Navbar.Brand href="/">
                     <img
                         alt=""
-                        src="/public/img2.png"
-                        width="60"
-                        height="80"
+                        src="/public/logo.jpeg"
+                        width="80"
+                        height="100"
                         className="d-inline-block align-top"
                     />{' '}
                 </Navbar.Brand>

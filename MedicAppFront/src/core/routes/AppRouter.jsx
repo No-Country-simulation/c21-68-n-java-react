@@ -25,6 +25,8 @@ export const AppRouter = createBrowserRouter([
         element: <Layout><HomeView/></Layout>
     },
     {
+        // path: '/login',
+        // element: <PublicRoute><Layout><LoginView/></Layout>,</PublicRoute>
         path: '/login',
         element:<PublicRoute><Layout><LoginView/></Layout></PublicRoute> 
     },
@@ -46,7 +48,7 @@ export const AppRouter = createBrowserRouter([
     },
     {
         path: '/agendar_cita',
-        element: <Layout><AgendarCita/></Layout>,
+        element: <PublicRoute><Layout><AgendarCita/></Layout></PublicRoute>
     },
     {
         path: 'paciente/horario',

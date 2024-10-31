@@ -40,5 +40,5 @@ public class UserModel {
     private String contraseña;
 
     @Enumerated(EnumType.STRING)
-    private rol rol;
+    private Rol rol;
 }
