@@ -5,6 +5,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.teleMedicina.teleMedicina.models.usuarios.Usuario;
 import com.teleMedicina.teleMedicina.models.usuarios.UsuarioRepository;
@@ -23,7 +26,13 @@ public class AutenticacionService implements UserDetailsService {
         
         UserDetails usuario = usuarioRepository.findByEmail(username);
 
-        if (usuario == null) {
+       if (usuario == null) {
+            // Establecer un atributo en el request actual
+            RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+            if (requestAttributes != null) {
+                ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
+                servletRequestAttributes.getRequest().setAttribute("USER_NOT_FOUND", true);
+            }
             throw new UsernameNotFoundException("Usuario no encontrado");
         }
         

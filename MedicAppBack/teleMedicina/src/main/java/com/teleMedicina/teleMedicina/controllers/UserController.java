@@ -42,6 +42,14 @@ public class UserController {
         return user != null ? new ResponseEntity<>(user, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    //Un usuario
+    @GetMapping("/usuario/email/{email}")
+    public ResponseEntity<Usuario> getUserByEmail(@PathVariable String email) {
+        System.out.println("Email");
+        Usuario user = userService.getUserByEmail(email);
+        return user != null ? new ResponseEntity<>(user, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     //Agregar usuario
     @PostMapping("/registro")
     public ResponseEntity<Usuario> createUser(@Valid @RequestBody Usuario user) {

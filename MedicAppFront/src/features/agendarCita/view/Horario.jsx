@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 //import 'bootstrap/dist/css/bootstrap.min.css';
+import Alert from 'react-bootstrap/Alert';
+// import { useNavigate } from 'react-router-dom'
 
 
 const Horario = () => {
@@ -10,6 +12,9 @@ const Horario = () => {
 
 	const [selectedTime, setSelectedTime] = useState('');
 	const [selectedSpecialty, setSelectedSpecialty] = useState('');
+	const [showAlert, setShowAlert] = useState(false);
+	const [alertConfig, setAlertConfig] = useState({ variant: '', message: '' });
+
 
 	const availableTimes = [
 		'09:00 AM',
@@ -46,9 +51,19 @@ const Horario = () => {
 	};
 
 	const handleConfirm = () => {
-		alert(`Turno confirmado para el paciente: ${event.nombre} a las: ${selectedTime} con el especialista: ${selectedSpecialty}.`);
+		// alert(`Turno confirmado para el paciente: ${event.nombre} a las: ${selectedTime} con el especialista: ${selectedSpecialty}.`);
 		// aca debe enviar los datos al servidor
-		navigate('/'); // Redirige después de confirmar
+		// navigate('/'); // Redirige después de confirmar
+
+		setAlertConfig({
+			variant: 'success',
+			message: '¡Su cita fue agendada para para la fecha y hora seleccionada por favor revise su correo en donde se le enviara el link de la reunión!'
+		});
+		setShowAlert(true);
+		// sessionStorage.setItem('token', JSON.stringify(data));
+		// setTimeout(() => {
+		// 	navigate('/agendar_cita');
+		// }, 1500);
 	};
 
 	if (!event) {
@@ -57,26 +72,34 @@ const Horario = () => {
 
 	return (
 		<div className="container mt-5">
+			<Alert 
+			show={showAlert}
+			variant={alertConfig.variant}
+			onClose={() => setShowAlert(false)}
+			dismissible
+			className="position-fixed top-0 start-50 translate-middle-x mt-3"
+			style={{ zIndex: 1000, minWidth: '300px' }}
+			>
+				{alertConfig.message}
+			</Alert>
 			<h1 className="text-center" style={{ "color": '#234A6B' }}>Detalles del Turno</h1>
 			<div className="card">
 				<div className="card-body py-5 px-md-5">
 					<div className="form-floating mb-3">
-						<input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" name="email" disabled/>
+						<input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" name="nombre" disabled/>
 						<label htmlFor="floatingInput"><p><strong>Nombre del Paciente: </strong>{event.nombre}</p></label>
-						{/* <div className="valid-feedback">Email valido</div>
-						<div className="invalid-feedback">Por favor ingrese un email valido.</div> */}
+					</div>
+					<div className="form-floating mb-3">
+						<input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" name="email" disabled/>
+						<label htmlFor="floatingInput"><p><strong>Email del Paciente: </strong>{event.email}</p></label>
 					</div>
 					<div className="form-floating mb-3">
 						<input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" name="email" disabled/>
 						<label htmlFor="floatingInput"><p><strong>Id del Paciente: </strong>{event.id}</p></label>
-						{/* <div className="valid-feedback">Email valido</div>
-						<div className="invalid-feedback">Por favor ingrese un email valido.</div> */}
 					</div>
 					<div className="form-floating mb-3">
 						<input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" name="email" disabled/>
 						<label htmlFor="floatingInput"><p><strong>Fecha de la Cita: </strong>{formattedDate}</p></label>
-						{/* <div className="valid-feedback">Email valido</div>
-						<div className="invalid-feedback">Por favor ingrese un email valido.</div> */}
 					</div>
 					<div className="form-group mt-3">
 						<label htmlFor="visitTime">Selecciona un horario de visita:</label>

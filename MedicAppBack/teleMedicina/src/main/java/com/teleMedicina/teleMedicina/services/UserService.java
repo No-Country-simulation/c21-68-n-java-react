@@ -40,6 +40,11 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
+    // traer un usuario especifico
+    public Usuario getUserByEmail(String  email) {
+        return (Usuario) userRepository.findByEmail(email);
+    }
+
     // guardar usuario
     public Usuario saveUser(Usuario user) {
         // Codifica la contraseña antes de guardarla
