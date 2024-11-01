@@ -143,6 +143,16 @@ const Calendar = () => {
 	const [currentEvents, setCurrentEvents] = useState([])
 	const navigate = useNavigate();
 
+	useEffect(() => {
+		// Obtener el token del sessionStorage
+		const token = JSON.parse(sessionStorage.getItem('token'));
+	
+		// Validar si el token es nulo
+		if (!token || !token.JWTtoken) {
+		  // Si el token es nulo, redireccionar al login
+		  navigate('/login');
+		}
+	  }, []); // Dependencia a 'navigate' para evitar advertencias
 	function handleWeekendsToggle() {
 		setWeekendsVisible(!weekendsVisible)
 	}

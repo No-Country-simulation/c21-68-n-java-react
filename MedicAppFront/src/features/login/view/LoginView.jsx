@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 // import { useAuth } from '../../../core/auth/hook/useAuth'
 // import Row from 'react-bootstrap/Row';
 // import Col from 'react-bootstrap/Col';
+import { useNavigate } from 'react-router-dom'
 
 const LoginView = () => {
 	// const { isLoggedIn, logIn } = useAuth();
 	const [user, setUser] = useState({ email: '', clave: '' });
-
+	const navigate = useNavigate(); 
 	console.log(user);
 	
 	const handleSubmit = async (event) => {
@@ -20,7 +21,15 @@ const LoginView = () => {
 			body: JSON.stringify(user),
 		})
 		.then(response => response.json())
-		.then(data => console.log('User created:', data))
+		.then(data => {console.log('User created:', data)
+			if(data!=null&& data.JWTtoken!=null){
+				sessionStorage.setItem('token', JSON.stringify(data));
+				//navigate('/agendar_cita',{ state: { event } })
+				navigate('/agendar_cita')
+			}
+			
+			
+		})
 		.catch(error => console.error('Error creating user:', error));
 	};
 
