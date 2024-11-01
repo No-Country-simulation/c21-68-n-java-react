@@ -1,6 +1,12 @@
 package com.teleMedicina.teleMedicina.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.security.core.AuthenticationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -10,7 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.teleMedicina.teleMedicina.errores.ErrorResponse;
 import com.teleMedicina.teleMedicina.models.usuarios.DatosAutenticacionUsuario;
 import com.teleMedicina.teleMedicina.models.usuarios.Usuario;
 import com.teleMedicina.teleMedicina.security.DatosJWTToken;
@@ -29,17 +38,34 @@ public class AutenticacionController {
     @Autowired
     private TokenService tokenService;
 
+    @SuppressWarnings("null")
     @PostMapping("/login")
     public ResponseEntity autenticarUsuario(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario) {
 
-        System.out.println(datosAutenticacionUsuario);
+        ResponseEntity responseEntity = null;
+        // String JWTtoken = null;
 
-        Authentication authToken = new UsernamePasswordAuthenticationToken(datosAutenticacionUsuario.email(), datosAutenticacionUsuario.clave());
+        try {
+            
+            Authentication authToken = new UsernamePasswordAuthenticationToken(datosAutenticacionUsuario.email(), datosAutenticacionUsuario.clave());
+    
+            var usuarioAutenticado = authenticationManager.authenticate(authToken);
+    
+            var JWTtoken = tokenService.generarToken((Usuario) usuarioAutenticado.getPrincipal());
 
-        var usuarioAutenticado = authenticationManager.authenticate(authToken);
+            responseEntity = ResponseEntity.ok(new DatosJWTToken(JWTtoken));
 
-        var JWTtoken = tokenService.generarToken((Usuario) usuarioAutenticado.getPrincipal());
+        } catch (AuthenticationException  e) {
+            if (RequestContextHolder.getRequestAttributes() != null &&
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                    .getRequest().getAttribute("USER_NOT_FOUND") != null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse("Usuario no encontrado", 404));
+            }
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(new ErrorResponse("Credenciales inválidas", 401));
+        }
 
-        return ResponseEntity.ok(new DatosJWTToken(JWTtoken));
+        return responseEntity;
     }
 }

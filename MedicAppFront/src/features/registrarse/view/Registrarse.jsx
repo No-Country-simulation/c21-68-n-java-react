@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import Alert from 'react-bootstrap/Alert';
+import { useNavigate } from 'react-router-dom'
+
 
 const Registrarse = () => {
 
@@ -10,20 +13,83 @@ const Registrarse = () => {
 		rol: 'Paciente'
 	});
 
+	const [showAlert, setShowAlert] = useState(false);
+	const [alertConfig, setAlertConfig] = useState({ variant: '', message: '' });
+	const navigate = useNavigate(); 
+
 	console.log(user);
 	
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		await fetch('http://localhost:8080/registro', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(user),
-		})
-		.then(response => response.json())
-		.then(data => console.log('User created:', data))
-		.catch(error => console.error('Error creating user:', error));
+
+		try {
+            const response = await fetch('http://localhost:8080/registro', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+            });
+
+            const data = await response.json();
+
+			console.log(response);
+            if (!response.ok) {
+                // switch (response.status) {
+                //     case 404:
+                //         setAlertConfig({
+                //             variant: 'danger',
+                //             message: 'Usuario no encontrado'
+                //         });
+                //         break;
+                //     case 401:
+                //         setAlertConfig({
+                //             variant: 'danger',
+                //             message: 'Credenciales inválidas'
+                //         });
+                //         break;
+                //     default:
+                //         setAlertConfig({
+                //             variant: 'danger',
+                //             message: 'Error en el servidor'
+                //         });
+                // }
+				if (response.status === 409) {
+					// Mostrar mensaje al usuario sobre el conflicto
+					setAlertConfig({
+						variant: 'danger',
+						message: '¡Usuario ya registrado!'
+					});
+					setShowAlert(true);
+					return;
+				} else {
+					setAlertConfig({
+						variant: 'danger',
+						message: '¡Registro de Usuario Fallido!'
+					});
+					setShowAlert(true);
+					return;
+				}
+            }
+
+            if (response.status === 201) {
+                setAlertConfig({
+                    variant: 'success',
+                    message: '¡Registro de Usuario Exitoso!'
+                });
+                setShowAlert(true);
+                sessionStorage.setItem('token', JSON.stringify(data));
+                setTimeout(() => {
+                    navigate('/login');
+                }, 1500);
+            }
+        } catch (error) {
+            setAlertConfig({
+                variant: 'danger',
+                message: 'Error de conexión'
+            });
+            setShowAlert(true);
+        }
 	};
 
 	const handleChange = (event) => {
@@ -40,6 +106,16 @@ const Registrarse = () => {
 						<h1 className="h3 mb-3 fw-normal" style={{ "color": '#234A6B' }}>¡Registrar nuevo Paciente!</h1>
 					</div>
 					<div className="col-md-6 mt-5 d-flex justify-content-center" style={{"height": "400px"}}>
+					<Alert 
+                        show={showAlert}
+                        variant={alertConfig.variant}
+                        onClose={() => setShowAlert(false)}
+                        dismissible
+                        className="position-fixed top-0 start-50 translate-middle-x mt-3"
+                        style={{ zIndex: 1000, minWidth: '300px' }}
+                    >
+                        {alertConfig.message}
+                    </Alert>
 						<form className="w-100 was-validated" onSubmit={handleSubmit}>
 							<div className="form-floating mb-3  mt-3">
 								<input type="text" className="form-control" id="formInputNombre" name="nombre" value={user.nombre} placeholder="Nombre" onChange={handleChange} required/>

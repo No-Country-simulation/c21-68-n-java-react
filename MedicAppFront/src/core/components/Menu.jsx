@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Link, useNavigate } from 'react-router-dom';
+ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/hook/useAuth';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -8,9 +8,14 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 
 const Menu = () => {
-    // const navigate = useNavigate();
+     const navigate = useNavigate();
     const { logOut, isLoggedIn } = useAuth();
 
+    function cerrarSesion(){
+        sessionStorage.removeItem('token');
+    // Redirigir al login
+    navigate('/login');
+    }
     // const handleLoginClick = () => {
     //    navigate('/login'); // Cambia la ruta según sea necesario
     // };
@@ -41,7 +46,7 @@ const Menu = () => {
                             <NavDropdown.Item href="/medico/turnos">Turnos Disponibles</NavDropdown.Item>
                             <NavDropdown.Item href="/medico/videoLlamada">Video Llamada</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/login">Iniciar Sesión / Registrarse</NavDropdown.Item>
+                            <NavDropdown.Item href="/login">Iniciar Sesión</NavDropdown.Item>
                             <NavDropdown.Divider />
                             {/* <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item> */}
                         </NavDropdown>
@@ -54,7 +59,7 @@ const Menu = () => {
                             <NavDropdown.Item href="#action/3.4">
                                 Separated link
                             </NavDropdown.Item> */}
-                            <NavDropdown.Item onClick={logOut}>Cerrar Sesion</NavDropdown.Item>
+                            <NavDropdown.Item onClick={cerrarSesion}>Cerrar Sesion</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

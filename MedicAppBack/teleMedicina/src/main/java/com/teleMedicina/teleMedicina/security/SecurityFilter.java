@@ -31,8 +31,8 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 
-        // Ignorar la ruta /login
-        if ("/login".equals(request.getRequestURI())) {
+       // Ignorar las rutas públicas
+        if ("/login".equals(request.getRequestURI()) || "/registro".equals(request.getRequestURI())) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -50,38 +50,44 @@ public class SecurityFilter extends OncePerRequestFilter {
                     var usuario = usuarioRepository.findByEmail(nombreUsuario);
 
                     if (usuario != null) {
-
                         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
                         SecurityContextHolder.getContext().setAuthentication(authentication);
+                    } else {
+                        // Usuario no encontrado en la base de datos
+                        logger.error("Usuario no encontrado en la base de datos: " + nombreUsuario);
+                        setResponse(response, HttpServletResponse.SC_NOT_FOUND, "Usuario no encontrado");
+                        return;
                     }
                 }
             } catch (TokenExpiredException ex) {
-                setUnauthorizedResponse(response, "Expiración de token");
+                logger.error("Token expirado: " + ex.getMessage());
+                setResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Token expirado");
                 return;
             } catch (JWTVerificationException ex) {
-                setUnauthorizedResponse(response, "Token JWT inválido");
+                logger.error("Token JWT inválido: " + ex.getMessage());
+                setResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Token inválido");
                 return;
             } catch (Exception ex) {
-                setInternalServerErrorResponse(response, "Ocurrió un error en la autenticación.");
+                logger.error("Error en la autenticación: " + ex.getMessage(), ex);
+                setResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error en la autenticación");
                 return;
             }
+        } else {
+            // No se proporcionó token
+            logger.warn("No se proporcionó token de autorización");
+            setResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Token de autorización requerido");
+            return;
         }
         
         filterChain.doFilter(request, response);
     }
 
-    // Métodos auxiliares para manejar respuestas
-    private void setUnauthorizedResponse(HttpServletResponse response, String message) throws IOException {
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    // Método auxiliar para manejar respuestas
+    private void setResponse(HttpServletResponse response, int statusCode, String message) throws IOException {
+        response.setStatus(statusCode);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("{\"error\": \"" + message + "\"}");
-    }
-
-    private void setInternalServerErrorResponse(HttpServletResponse response, String message) throws IOException {
-        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("{\"error\": \"" + message + "\"}");
+        String jsonResponse = String.format("{\"error\": \"%s\", \"status\": %d}", message, statusCode);
+        response.getWriter().write(jsonResponse);
     }
 }
