@@ -1,6 +1,6 @@
 package com.teleMedicina.teleMedicina.models;
 
-public enum Rol {
+public enum rol {
     Paciente,
     Doctor,
     Admin

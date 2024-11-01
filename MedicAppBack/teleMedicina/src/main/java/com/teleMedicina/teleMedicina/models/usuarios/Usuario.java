@@ -6,7 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.teleMedicina.teleMedicina.models.Rol;
+import com.teleMedicina.teleMedicina.models.rol;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,7 +50,7 @@ public class Usuario implements UserDetails {
     private String apellido;
 
     @Enumerated(EnumType.STRING)
-    private Rol rol;
+    private rol rol;
     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
