@@ -44,7 +44,7 @@ const Menu = () => {
                         {/* <Nav.Link href="/especialidades">Especialidades</Nav.Link> */}
                         <NavDropdown title="Medico" id="basic-nav-dropdown" className="mx-2">
                             <NavDropdown.Item href="/medico/turnos">Turnos Disponibles</NavDropdown.Item>
-                            <NavDropdown.Item href="/medico/videoLlamada">Video Llamada</NavDropdown.Item>
+                            {/*<NavDropdown.Item href="/medico/videoLlamada">Video Llamada</NavDropdown.Item>*/}
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="/login">Iniciar Sesión</NavDropdown.Item>
                             <NavDropdown.Divider />
@@ -52,7 +52,7 @@ const Menu = () => {
                         </NavDropdown>
                         <NavDropdown title="Paciente" id="basic-nav-dropdown" className="mx-2">
                             <NavDropdown.Item href="/agendar_cita">Agendar Cita</NavDropdown.Item>
-                            <NavDropdown.Item href="/videoLlamada">Video Llamada</NavDropdown.Item>
+                            {/*<NavDropdown.Item href="/videoLlamada">Video Llamada</NavDropdown.Item>*/}
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="/login">Iniciar Sesión / Registrarse</NavDropdown.Item>
                             {/* <NavDropdown.Divider />

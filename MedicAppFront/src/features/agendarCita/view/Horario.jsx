@@ -57,7 +57,7 @@ const Horario = () => {
 
 		setAlertConfig({
 			variant: 'success',
-			message: '¡Su cita fue agendada para para la fecha y hora seleccionada por favor revise su correo en donde se le enviara el link de la reunión!'
+			message: '¡Su cita fue agendada para la fecha y hora seleccionada por favor revise su correo en donde se le enviará el link de la reunión!'
 		});
 		setShowAlert(true);
 		// sessionStorage.setItem('token', JSON.stringify(data));
